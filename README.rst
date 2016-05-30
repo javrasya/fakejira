@@ -8,7 +8,7 @@ django-river: https://github.com/javrasya/django-river
 Documentation
 -------------
 
-   .. code:: bash
+   .. code:: python
 
       git clone https://github.com/javrasya/fakejira
       pip install -r requirements.txt
