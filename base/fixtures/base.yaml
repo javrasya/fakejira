@@ -1,0 +1,196 @@
+
+########################################
+#         User Groups
+########################################
+-    model: auth.group
+     fields:
+          name: "Team Leader"
+          permissions:
+            -
+              - "add_ticket"
+              - "base"
+              - "ticket"
+            -
+              - "change_ticket"
+              - "base"
+              - "ticket"
+            -
+              - "delete_ticket"
+              - "base"
+              - "ticket"
+-    model: auth.group
+     fields:
+          name: "Developer"
+          permissions:
+            -
+              - "change_ticket"
+              - "base"
+              - "ticket"
+
+
+########################################
+#         Users
+########################################
+-    model: auth.user
+     pk: 1
+     fields:
+          password: pbkdf2_sha256$24000$GTiAaeb86IrE$yQbQwxe5qct+aX3UEIni/+46LYbJB9BJk5P0CvWCoHI=
+          is_superuser: true
+          username: root
+          is_staff: true
+          is_active: true
+-    model: auth.user
+     fields:
+          password: pbkdf2_sha256$24000$nGqgO93SyAGi$rF1/PetPiyIrmRKfDIDBw109s+pnzDzWZ9WiwQfMIC8=
+          is_superuser: false
+          username: team_leader_1
+          is_staff: true
+          is_active: true
+          groups:
+            -
+              - "Team Leader"
+-    model: auth.user
+     pk: 3
+     fields:
+          password: pbkdf2_sha256$24000$8LKo7Jz08GPI$X8Ds9nlANU4aCE9ek/p9dDtDxTKut4LY7iz3Mu5DA+E=
+          last_login: 2016-05-29 13:09:07.776879+00:00
+          is_superuser: false
+          username: developer_1
+          is_staff: true
+          is_active: true
+          groups:
+            -
+              - "Developer"
+
+########################################
+#         States
+########################################
+-    model: river.state
+     fields:
+          slug: "open"
+          label: "Open"
+-    model: river.state
+     fields:
+          slug: "in-progress"
+          label: "In Progress"
+-    model: river.state
+     fields:
+          slug: "resolved"
+          label: "Resolved"
+-    model: river.state
+     fields:
+          slug: "re-opened"
+          label: "Re Opened"
+-    model: river.state
+     fields:
+          slug: "closed"
+          label: "Closed"
+
+########################################
+#         Transitions
+########################################
+-    model: river.transition
+     fields:
+          source_state:
+            - "open"
+          destination_state:
+            - "in-progress"
+          direction: 1
+-    model: river.transition
+     fields:
+          source_state:
+            - "in-progress"
+          destination_state:
+            - "resolved"
+          direction: 1
+-    model: river.transition
+     fields:
+          source_state:
+            - "resolved"
+          destination_state:
+            - "re-opened"
+          direction: 0
+-    model: river.transition
+     fields:
+          source_state:
+            - "re-opened"
+          destination_state:
+            - "in-progress"
+          direction: 1
+-    model: river.transition
+     fields:
+          source_state:
+            - "resolved"
+          destination_state:
+            - "closed"
+          direction: 1
+
+
+########################################
+#         Proceeding Meta
+########################################
+-    model: river.proceedingmeta
+     fields:
+          content_type:
+            - "base"
+            - "ticket"
+          field: "status"
+          transition:
+            - "open"
+            - "in-progress"
+          order: 0
+          groups:
+            -
+              - "Developer"
+-    model: river.proceedingmeta
+     fields:
+          content_type:
+            - "base"
+            - "ticket"
+          field: "status"
+          transition:
+            - "in-progress"
+            - "resolved"
+          order: 0
+          groups:
+            -
+              - "Developer"
+-    model: river.proceedingmeta
+     fields:
+          content_type:
+            - "base"
+            - "ticket"
+          field: "status"
+          transition:
+            - "resolved"
+            - "re-opened"
+          order: 0
+          groups:
+            -
+              - "Team Leader"
+-    model: river.proceedingmeta
+     fields:
+          content_type:
+            - "base"
+            - "ticket"
+          field: "status"
+          transition:
+            - "re-opened"
+            - "in-progress"
+          order: 0
+          groups:
+            -
+              - "Developer"
+-    model: river.proceedingmeta
+     fields:
+          content_type:
+            - "base"
+            - "ticket"
+          field: "status"
+          transition:
+            - "resolved"
+            - "closed"
+          order: 0
+          groups:
+            -
+              - "Team Leader"
