@@ -10,11 +10,12 @@ Documentation
 
    .. code:: python
 
-      git clone https://github.com/javrasya/fakejira
-      pip install -r requirements.txt
-      cd fakejira
-      python manage.py migrate
-      python manage.py loaddata base/fixtures/base.yaml
+       git clone https://github.com/javrasya/fakejira
+       pip install -r requirements.txt
+       cd fakejira
+       python manage.py migrate
+       python manage.py loaddata base/fixtures/base.yaml
+
 
 It is ready to workflowing now. All configuration and scenario in the video tutorial is created by loading the fixture file.
 
