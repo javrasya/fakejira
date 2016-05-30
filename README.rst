@@ -19,11 +19,11 @@ Documentation
 
 It is ready to workflowing now. All configuration and scenario in the video tutorial is created by loading the fixture file.
 
-Here are few things you can test;
+**Here are few things you can test;**
 
 * Create some tickets (teamleader and root users can create tickets)
 * Login as developer or teamleader to approve some transitions (teamleader and developers can approve transitions.)
-* While developer can approve "open -> inprogress", "in-progress -> resolved" and "re-opened -> in-progress", teamleader can approve "resolved -> re-opened" and "resolved -> closed"
+* While **developer** can approve **"open -> inprogress"**, **"in-progress -> resolved"** and **"re-opened -> in-progress"**, **teamleader** can approve **"resolved -> re-opened"** and **"resolved -> closed"**
 
 User Credentials:
 ^^^^^^^^^^^^^^^^^
