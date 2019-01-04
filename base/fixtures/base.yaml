@@ -87,110 +87,75 @@
           label: "Closed"
 
 ########################################
-#         Transitions
+#       Transition Approval Meta
 ########################################
--    model: river.transition
+-    model: river.transitionapprovalmeta
      fields:
+          content_type:
+            - "base"
+            - "ticket"
+          field_name: "status"
           source_state:
             - "open"
           destination_state:
             - "in-progress"
-          direction: 1
--    model: river.transition
-     fields:
-          source_state:
-            - "in-progress"
-          destination_state:
-            - "resolved"
-          direction: 1
--    model: river.transition
-     fields:
-          source_state:
-            - "resolved"
-          destination_state:
-            - "re-opened"
-          direction: 0
--    model: river.transition
-     fields:
-          source_state:
-            - "re-opened"
-          destination_state:
-            - "in-progress"
-          direction: 1
--    model: river.transition
-     fields:
-          source_state:
-            - "resolved"
-          destination_state:
-            - "closed"
-          direction: 1
-
-
-########################################
-#         Proceeding Meta
-########################################
--    model: river.proceedingmeta
-     fields:
-          content_type:
-            - "base"
-            - "ticket"
-          field: "status"
-          transition:
-            - "open"
-            - "in-progress"
-          order: 0
+          priority: 0
           groups:
             -
               - "Developer"
--    model: river.proceedingmeta
+-    model: river.transitionapprovalmeta
      fields:
           content_type:
             - "base"
             - "ticket"
-          field: "status"
-          transition:
+          field_name: "status"
+          source_state:
             - "in-progress"
+          destination_state:
             - "resolved"
-          order: 0
+          priority: 0
           groups:
             -
               - "Developer"
--    model: river.proceedingmeta
+-    model: river.transitionapprovalmeta
      fields:
           content_type:
             - "base"
             - "ticket"
-          field: "status"
-          transition:
+          field_name: "status"
+          source_state:
             - "resolved"
+          destination_state:
             - "re-opened"
-          order: 0
+          priority: 0
           groups:
             -
               - "Team Leader"
--    model: river.proceedingmeta
+-    model: river.transitionapprovalmeta
      fields:
           content_type:
             - "base"
             - "ticket"
-          field: "status"
-          transition:
+          field_name: "status"
+          source_state:
             - "re-opened"
+          destination_state:
             - "in-progress"
-          order: 0
+          priority: 0
           groups:
             -
               - "Developer"
--    model: river.proceedingmeta
+-    model: river.transitionapprovalmeta
      fields:
           content_type:
             - "base"
             - "ticket"
-          field: "status"
-          transition:
+          field_name: "status"
+          source_state:
             - "resolved"
+          destination_state:
             - "closed"
-          order: 0
+          priority: 0
           groups:
             -
               - "Team Leader"

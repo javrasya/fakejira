@@ -1,23 +1,22 @@
 from django.contrib import admin
 
 # Register your models here.
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from base.models import Ticket
 
 
-def create_river_button(obj, proceeding):
-    return """
+def create_river_button(obj, transition_approval):
+    approve_ticket_url = reverse('approve_ticket', kwargs={'ticket_id': obj.pk, 'next_state_id': transition_approval.destination_state.pk})
+    return f"""
         <input
             type="button"
             style="margin:2px;2px;2px;2px;"
-            value="%s"
-            onclick = "location.href=\'%s\'"
+            value="{transition_approval.source_state} -> {transition_approval.destination_state}"
+            onclick="location.href=\'{approve_ticket_url}\'"
         />
-    """ % (proceeding.meta.transition,
-           reverse('proceed_ticket',
-                   kwargs={'ticket_id': obj.pk, 'next_state_id': proceeding.meta.transition.destination_state.pk})
-           )
+    """
 
 
 class TicketAdmin(admin.ModelAdmin):
@@ -29,12 +28,10 @@ class TicketAdmin(admin.ModelAdmin):
 
     def river_actions(self, obj):
         content = ""
-        for proceeding in obj.get_available_proceedings(self.user):
-            content += create_river_button(obj, proceeding)
+        for transition_approval in obj.river.status.get_available_approvals(as_user=self.user):
+            content += create_river_button(obj, transition_approval)
 
-        return content
-
-    river_actions.allow_tags = True
+        return mark_safe(content)
 
 
 admin.site.register(Ticket, TicketAdmin)
