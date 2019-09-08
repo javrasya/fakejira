@@ -32,10 +32,10 @@ Documentation
        cd fakejira
        pip install -r requirements.txt
        python manage.py migrate
-       python manage.py loaddata base/fixtures/base.yaml
+       python manage.py bootstrap
 
 
-It is ready to workflowing now. All configuration and scenario in the video tutorial is created by loading the fixture file.
+It is ready to bbe used now. All configuration and scenario is bootstrapped.
 
 **Here are few things you can test;**
 

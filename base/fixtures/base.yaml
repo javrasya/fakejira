@@ -1,161 +1,165 @@
-
 ########################################
 #         User Groups
 ########################################
--    model: auth.group
-     fields:
-          name: "Team Leader"
-          permissions:
-            -
-              - "add_ticket"
-              - "base"
-              - "ticket"
-            -
-              - "change_ticket"
-              - "base"
-              - "ticket"
-            -
-              - "delete_ticket"
-              - "base"
-              - "ticket"
--    model: auth.group
-     fields:
-          name: "Developer"
-          permissions:
-            -
-              - "change_ticket"
-              - "base"
-              - "ticket"
+- model: auth.group
+  fields:
+    name: "Team Leader"
+    permissions:
+      - - "add_ticket"
+        - "base"
+        - "ticket"
+      - - "change_ticket"
+        - "base"
+        - "ticket"
+      - - "delete_ticket"
+        - "base"
+        - "ticket"
+- model: auth.group
+  fields:
+    name: "Developer"
+    permissions:
+      - - "change_ticket"
+        - "base"
+        - "ticket"
 
 
 ########################################
 #         Users
 ########################################
--    model: auth.user
-     pk: 1
-     fields:
-          password: pbkdf2_sha256$24000$GTiAaeb86IrE$yQbQwxe5qct+aX3UEIni/+46LYbJB9BJk5P0CvWCoHI=
-          is_superuser: true
-          username: root
-          is_staff: true
-          is_active: true
--    model: auth.user
-     fields:
-          password: pbkdf2_sha256$24000$nGqgO93SyAGi$rF1/PetPiyIrmRKfDIDBw109s+pnzDzWZ9WiwQfMIC8=
-          is_superuser: false
-          username: team_leader_1
-          is_staff: true
-          is_active: true
-          groups:
-            -
-              - "Team Leader"
--    model: auth.user
-     pk: 3
-     fields:
-          password: pbkdf2_sha256$24000$8LKo7Jz08GPI$X8Ds9nlANU4aCE9ek/p9dDtDxTKut4LY7iz3Mu5DA+E=
-          last_login: 2016-05-29 13:09:07.776879+00:00
-          is_superuser: false
-          username: developer_1
-          is_staff: true
-          is_active: true
-          groups:
-            -
-              - "Developer"
+- model: auth.user
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$24000$GTiAaeb86IrE$yQbQwxe5qct+aX3UEIni/+46LYbJB9BJk5P0CvWCoHI=
+    is_superuser: true
+    username: root
+    is_staff: true
+    is_active: true
+- model: auth.user
+  fields:
+    password: pbkdf2_sha256$24000$nGqgO93SyAGi$rF1/PetPiyIrmRKfDIDBw109s+pnzDzWZ9WiwQfMIC8=
+    is_superuser: false
+    username: team_leader_1
+    is_staff: true
+    is_active: true
+    groups:
+      - - "Team Leader"
+- model: auth.user
+  pk: 3
+  fields:
+    password: pbkdf2_sha256$24000$8LKo7Jz08GPI$X8Ds9nlANU4aCE9ek/p9dDtDxTKut4LY7iz3Mu5DA+E=
+    last_login: 2016-05-29 13:09:07.776879+00:00
+    is_superuser: false
+    username: developer_1
+    is_staff: true
+    is_active: true
+    groups:
+      - - "Developer"
 
 ########################################
 #         States
 ########################################
--    model: river.state
-     fields:
-          slug: "open"
-          label: "Open"
--    model: river.state
-     fields:
-          slug: "in-progress"
-          label: "In Progress"
--    model: river.state
-     fields:
-          slug: "resolved"
-          label: "Resolved"
--    model: river.state
-     fields:
-          slug: "re-opened"
-          label: "Re Opened"
--    model: river.state
-     fields:
-          slug: "closed"
-          label: "Closed"
+- model: river.state
+  fields:
+    slug: "open"
+    label: "Open"
+- model: river.state
+  fields:
+    slug: "in-progress"
+    label: "In Progress"
+- model: river.state
+  fields:
+    slug: "resolved"
+    label: "Resolved"
+- model: river.state
+  fields:
+    slug: "re-opened"
+    label: "Re Opened"
+- model: river.state
+  fields:
+    slug: "closed"
+    label: "Closed"
 
+########################################
+#       Workflow
+########################################
+- model: river.workflow
+  fields:
+    content_type:
+      - "base"
+      - "ticket"
+    field_name: "status"
+    initial_state:
+      - "open"
 ########################################
 #       Transition Approval Meta
 ########################################
--    model: river.transitionapprovalmeta
-     fields:
-          content_type:
-            - "base"
-            - "ticket"
-          field_name: "status"
-          source_state:
-            - "open"
-          destination_state:
-            - "in-progress"
-          priority: 0
-          groups:
-            -
-              - "Developer"
--    model: river.transitionapprovalmeta
-     fields:
-          content_type:
-            - "base"
-            - "ticket"
-          field_name: "status"
-          source_state:
-            - "in-progress"
-          destination_state:
-            - "resolved"
-          priority: 0
-          groups:
-            -
-              - "Developer"
--    model: river.transitionapprovalmeta
-     fields:
-          content_type:
-            - "base"
-            - "ticket"
-          field_name: "status"
-          source_state:
-            - "resolved"
-          destination_state:
-            - "re-opened"
-          priority: 0
-          groups:
-            -
-              - "Team Leader"
--    model: river.transitionapprovalmeta
-     fields:
-          content_type:
-            - "base"
-            - "ticket"
-          field_name: "status"
-          source_state:
-            - "re-opened"
-          destination_state:
-            - "in-progress"
-          priority: 0
-          groups:
-            -
-              - "Developer"
--    model: river.transitionapprovalmeta
-     fields:
-          content_type:
-            - "base"
-            - "ticket"
-          field_name: "status"
-          source_state:
-            - "resolved"
-          destination_state:
-            - "closed"
-          priority: 0
-          groups:
-            -
-              - "Team Leader"
+- model: river.transitionapprovalmeta
+  fields:
+    workflow:
+      -
+        - "base"
+        - "ticket"
+      - "status"
+    source_state:
+      - "open"
+    destination_state:
+      - "in-progress"
+    priority: 0
+    groups:
+      - - "Developer"
+- model: river.transitionapprovalmeta
+  fields:
+    workflow:
+      content_type:
+        - "base"
+        - "ticket"
+      field_name: "status"
+    source_state:
+      - "in-progress"
+    destination_state:
+      - "resolved"
+    priority: 0
+    groups:
+      - - "Developer"
+- model: river.transitionapprovalmeta
+  fields:
+    workflow:
+      content_type:
+        - "base"
+        - "ticket"
+      field_name: "status"
+    source_state:
+      - "resolved"
+    destination_state:
+      - "re-opened"
+    priority: 0
+    groups:
+      - - "Team Leader"
+- model: river.transitionapprovalmeta
+  fields:
+    workflow:
+      content_type:
+        - "base"
+        - "ticket"
+      field_name: "status"
+    source_state:
+      - "re-opened"
+    destination_state:
+      - "in-progress"
+    priority: 0
+    groups:
+      - - "Developer"
+- model: river.transitionapprovalmeta
+  fields:
+    workflow:
+      content_type:
+        - "base"
+        - "ticket"
+      field_name: "status"
+    source_state:
+      - "resolved"
+    destination_state:
+      - "closed"
+    priority: 0
+    groups:
+      - - "Team Leader"
