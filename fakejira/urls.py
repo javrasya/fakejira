@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^base/', include('base.urls'))
+    url(r'^base/', include('base.urls')),
+    url(r'^', include("river_admin.urls")),
 ]

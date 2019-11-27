@@ -1,3 +1,4 @@
+import river_admin
 from django.contrib import admin
 
 # Register your models here.
@@ -8,12 +9,12 @@ from base.models import Ticket
 
 
 def create_river_button(obj, transition_approval):
-    approve_ticket_url = reverse('approve_ticket', kwargs={'ticket_id': obj.pk, 'next_state_id': transition_approval.destination_state.pk})
+    approve_ticket_url = reverse('approve_ticket', kwargs={'ticket_id': obj.pk, 'next_state_id': transition_approval.transition.destination_state.pk})
     return f"""
         <input
             type="button"
             style="margin:2px;2px;2px;2px;"
-            value="{transition_approval.source_state} -> {transition_approval.destination_state}"
+            value="{transition_approval.transition.source_state} -> {transition_approval.transition.destination_state}"
             onclick="location.href=\'{approve_ticket_url}\'"
         />
     """
@@ -35,3 +36,12 @@ class TicketAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Ticket, TicketAdmin)
+
+
+class TicketRiverAdmin(river_admin.RiverAdmin):
+    name = "Issue Tracking Flow"
+    icon = "mdi-ticket-account"
+    list_displays = ['pk', 'no', 'subject', 'description', 'status']
+
+
+river_admin.site.register(Ticket, "status", TicketRiverAdmin)

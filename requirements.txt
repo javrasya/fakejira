@@ -1,3 +1,4 @@
 pyyaml
-django-river==2.0.0
+river-admin==0.5.0
+django-river==3.0.0
 django==2.1.5

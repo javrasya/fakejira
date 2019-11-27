@@ -1,4 +1,3 @@
-
 .. |image1| image:: https://cloud.githubusercontent.com/assets/1279644/15648187/8c09c7be-2671-11e6-80dc-45753d327fbe.png
 .. |image2| image:: https://cloud.githubusercontent.com/assets/1279644/15648193/93930298-2671-11e6-9f8f-c2500d435902.png
 .. |image3| image:: https://cloud.githubusercontent.com/assets/1279644/15648195/97213ac4-2671-11e6-8c2e-13c906c483b0.png
@@ -19,9 +18,11 @@
 Fake Jira an example for django-river
 =====================================
 
-This is an example for django-river which is created in its first video tutorial. In here, everything is ready. Just follow the documentation below.
+This is an example repository that is using ``django-river`` and ``River Admin``. In here, everything is ready. Just follow the documentation below.
 
 django-river: https://github.com/javrasya/django-river
+
+River Admin: https://github.com/javrasya/river-admin
 
 Documentation
 -------------
@@ -33,15 +34,21 @@ Documentation
        pip install -r requirements.txt
        python manage.py migrate
        python manage.py bootstrap
+       python manage.py runserver
 
 
-It is ready to bbe used now. All configuration and scenario is bootstrapped.
+It is ready to be used now. All configurations and scenarios are bootstrapped.
 
 **Here are few things you can test;**
 
 * Create some tickets (teamleader and root users can create tickets)
 * Login as developer or teamleader to approve some transitions (teamleader and developers can approve transitions.)
 * While **developer** can approve **"open -> inprogress"**, **"in-progress -> resolved"** and **"re-opened -> in-progress"**, **teamleader** can approve **"resolved -> re-opened"** and **"resolved -> closed"**
+
+River Admin
+^^^^^^^^^^^
+
+Check ``http://localhost:8000/river-admin/`` to play with ``River Admin``
 
 User Credentials:
 ^^^^^^^^^^^^^^^^^
